@@ -1,1 +1,0 @@
-# Nuxt-Netflix-like-app
