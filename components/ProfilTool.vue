@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import { MenuButton, Menu, MenuItems } from "@headlessui/vue";
+const { t } = useI18n();
 
 const navigation = getNavigation("profile");
+const userStore = useUserStore();
 
-const user = useSupabaseUser();
-const supabase = useSupabaseAuthClient();
+const user = userStore.getUser;
 
-const profile = computed(() => user.value?.user_metadata.avatar_url);
-
-const default_avatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
-
-async function Logout() {
-  await supabase.auth.signOut();
+async function logout() {
+  const { data } = await useFetch("/api/auth/logout", {
+    method: "POST",
+  });
+  if (data.value) {
+    console.log(data.value);
+  }
+  useSuccessToast(t("profile.logout"));
+  userStore.logout();
   useRouter().push("/auth/login");
 }
 </script>
@@ -23,10 +27,12 @@ async function Logout() {
         class="flex rounded-full bg-gray-800 text-sm focus:outline-none"
       >
         <span class="sr-only">Open user menu</span>
-        <img
-          class="h-8 w-8 rounded-full"
-          :src="profile || default_avatar"
-          alt=""
+        <nuxt-img
+          preload
+          class="h-10 w-10 rounded-full object-cover"
+          :src="user.avatar"
+          sizes="sm:100vw md:50vw lg:400px"
+          :alt="user.username"
         />
       </MenuButton>
     </div>
@@ -52,7 +58,7 @@ async function Logout() {
         <hr class="my-1 border-primary" />
         <div
           class="block px-4 py-2 text-sm text-gray-400 hover:bg-red-700 hover:text-white cursor-pointer"
-          @click="Logout"
+          @click="logout"
         >
           {{ $t("navigation.logout") }}
         </div>

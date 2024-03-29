@@ -1,46 +1,19 @@
-import { createUserInput, User } from "~/types/user";
+import { User } from "~/types/user";
 
-export async function useUser() {
-  const { data, error } = await useFetch<User>("/api/auth/user");
-  if (data.value) {
-    console.log(data.value);
-  }
-}
+export async function useUser(): Promise<User | null> {
+  const authCookie = useCookie("authToken").value;
+  const user = useUserStore().getUser;
 
-export async function useLogin(login: string, password: string) {
-  const { t } = useI18n();
-  const { data, error } = await useFetch<User>("/api/auth/login", {
-    method: "POST",
-    body: {
-      login: login,
-      password: password,
-    },
-  });
-  if (data.value) {
-    console.log(data.value);
-    useSuccessToast(t("login.welcome_back"));
+  if (authCookie && !user) {
+    const cookieHeaders = useRequestHeaders(["cookie"]);
+    const { data } = await useFetch<User>("/api/auth/user", {
+      method: "GET",
+      headers: cookieHeaders as HeadersInit,
+    });
+    if (!data.value) {
+      return null;
+    }
+    useUserStore().setUser(data.value);
   }
-}
-
-export async function useLogout() {
-  const { t } = useI18n();
-  const { data, error } = await useFetch("/api/auth/logout", {
-    method: "POST",
-  });
-  if (data.value) {
-    console.log(data.value);
-    useSuccessToast(t("profile.logout"));
-  }
-}
-
-export async function useSignup(createUserInput: createUserInput) {
-  const { t } = useI18n();
-  const { data, error } = await useFetch<User>("/api/auth/signup", {
-    method: "POST",
-    body: createUserInput,
-  });
-  if (data.value) {
-    console.log(data.value);
-    useSuccessToast(t("signup.you_have_successfully_registered"));
-  }
+  return user;
 }
