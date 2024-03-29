@@ -1,6 +1,6 @@
-
 <script setup lang="ts">
 import { useSignup } from "~/composables/useAuth";
+import LanguageSelector from "~/components/settings/LanguageSelector.vue";
 
 definePageMeta({
   name: "Signup",
@@ -43,7 +43,7 @@ async function signup() {
           autocomplete="username"
           required
           :placeholder="$t('signup.username')"
-          class="input w-full rounded-md"
+          class="input w-full"
           v-model="username"
         />
         <input
@@ -53,7 +53,7 @@ async function signup() {
           autocomplete="email"
           required
           :placeholder="$t('signup.email')"
-          class="input w-full rounded-md"
+          class="input w-full"
           v-model="email"
         />
         <input
@@ -63,7 +63,7 @@ async function signup() {
           autocomplete="current-password"
           required
           :placeholder="$t('signup.password')"
-          class="input w-full rounded-md"
+          class="input w-full"
           v-model="password"
         />
         <input
@@ -73,7 +73,7 @@ async function signup() {
           autocomplete="current-password"
           required
           :placeholder="$t('signup.confirm_password')"
-          class="input w-full rounded-md"
+          class="input w-full"
           v-model="passwordConfirm"
         />
         <ButtonPrimary
@@ -87,5 +87,6 @@ async function signup() {
       </form>
       <NuxtLink :to="{ name: 'Login' }" class="btn-secondary mt-6"> Already have an account ? Login here </NuxtLink>
     </div>
+    <LanguageSelector :is-text="true" class="mt-6" />
   </div>
 </template>
