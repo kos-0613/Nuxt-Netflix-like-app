@@ -31,12 +31,32 @@ declare module '@nuxt/schema' {
       authExpiration: string,
    },
 
+   ipx: {
+      dir: string,
+
+      domains: Array<string>,
+
+      sharp: any,
+
+      alias: {
+         "/supabase": string,
+
+         "/tmdb": string,
+      },
+   },
+
    supabase: {
       serviceKey: any,
    },
   }
   interface PublicRuntimeConfig {
    appDomain: string,
+
+   tmdb: {
+      apiKey: string,
+
+      accessToken: string,
+   },
 
    supabase: {
       url: string,
