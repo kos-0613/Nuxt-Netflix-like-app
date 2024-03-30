@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MainCarousel from '~~/components/Movie/MainCarousel.vue';
+import MainCarousel from "~/components/Movie/MainCarousel.vue";
 
 definePageMeta({
   name: "Home",
@@ -8,19 +8,16 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { fetchTopRatedMovie, fetchPopularMovie } = useMovie();
+const { fetchTopRatedMovie, fetchPopularMovie, popularMovies } = useMovie();
 
-const {data,pending} = useAsyncData(async () => {
-  const [topRated, popular] = await Promise.all([fetchTopRatedMovie(), fetchPopularMovie()]);
-  return {
-    topRated,
-    popular
-  }
-})
+onMounted(() => {
+  fetchTopRatedMovie();
+  fetchPopularMovie();
+});
 </script>
 
 <template>
-  <div class="flex flex-col item-center justify-center gap-8">
-    <MainCarousel :films="data.popular.results"/>
+  <div class="flex flex-col items-center justify-center gap-8">
+    <MainCarousel :films="popularMovies" :pending="false" />
   </div>
 </template>
