@@ -31,20 +31,6 @@ declare module '@nuxt/schema' {
       authExpiration: string,
    },
 
-   ipx: {
-      dir: string,
-
-      domains: Array<string>,
-
-      sharp: any,
-
-      alias: {
-         "/supabase": string,
-
-         "/tmdb": string,
-      },
-   },
-
    supabase: {
       serviceKey: any,
    },

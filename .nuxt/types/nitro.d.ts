@@ -48,9 +48,6 @@ declare module 'nitropack' {
     '/__nuxt_error': {
       'default': Awaited<ReturnType<typeof import('../../node_modules/.pnpm/nuxt@3.1.1_eslint@8.33.0_sass@1.57.1_typescript@4.9.5/node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>
     }
-    '/_ipx/**': {
-      'default': Awaited<ReturnType<typeof import('../../node_modules/.pnpm/@nuxt+image-edge@1.0.0-27840416.dc1ed65/node_modules/@nuxt/image-edge/dist/runtime/ipx').default>>
-    }
     '/api/_supabase/session': {
       'default': Awaited<ReturnType<typeof import('../../node_modules/.pnpm/@nuxtjs+supabase@0.3.1/node_modules/@nuxtjs/supabase/dist/runtime/server/api/session').default>>
     }

@@ -2,6 +2,7 @@
 import { PlayIcon, PlusCircleIcon } from "@heroicons/vue/24/solid";
 import { Movie } from "~/types/movie";
 import { PropType } from "vue";
+import { NuxtLink } from "~~/.nuxt/components";
 defineProps({
   film: {
     type: Object as PropType<Movie>,
@@ -22,11 +23,14 @@ defineProps({
         {{ film.overview }}
       </p>
       <div class="flex items-center mt-4 space-x-4">
+        <NuxtLink :to="`/movie/${film.id}`" class="glass-button">
+            <button>
+                <PlayIcon class="h-4 w-4 inline-block mr-2"/>
+                {{ $t("global.play") }}
+            </button>
+        </NuxtLink>
         <button class="glass-button">
-          <PlayIcon class="h-4 w-4 inline-block mr-2" />
-          Play
-        </button>
-        <button class="glass-button">
+            {{ $t("global.add_to_watchlist") }}
           <PlusCircleIcon class="h-4 w-4 inline-block mr-2" />
           My List
         </button>
